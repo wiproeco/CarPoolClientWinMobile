@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src  'unsafe-inline' *; style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.gstatic.com 'unsafe-inline' 'self' https://*.googleapis.com 'unsafe-eval'; img-src *; font-src *; media-src *">
+    <script src="cordova.js"></script>
+    <script src="scripts/winstore-jscompat.js"></script>
+    <script src="scripts/platformOverrides.js"></script>
+
+
+    <title></title>
+    <style>
+        iframe { 
+            border:0;
+            height:100%;
+            width:100%;
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="inlineWebContentIframe" src="ms-appx-web:///www/ride.html"></iframe>
+
+    <script src="scripts/CorsMsg.js"></script>
+    <script src="scripts/jquery-1.11.1.min.js"></script>
+    <script src="scripts/angular.min.js"></script>
+    <script type="text/javascript">
+       
+        CORSMsg.ReceiveMsg(function (jData) {
+            var response = JSON.parse(jData.data);
+            ServiceCall(response);
+            
+        }, true);
+
+        (function () {
+
+            var iframe;
+
+            document.body.onload = function () {
+                var domain = "ms-appx-web://" + document.location.host;
+                iframe = document.getElementById("inlineWebContentIframe");
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var request = {
+                        name : "position",
+                        value: {
+                            pos : position,
+                            userId: localStorage.getItem("userid")
+                        }
+                    }
+                    CORSMsg.SendMsg(JSON.stringify(request), iframe.contentWindow);
+                });
+            };
+            
+        })();
+
+        function ServiceCall(response)
+        {
+            var domain = "ms-appx-web://" + document.location.host;
+            var iframe = document.getElementById("inlineWebContentIframe");
+            if (response.type == "GET")
+            {
+                $.ajax({
+                    type: response.type,
+                    contentType: response.contentType,
+                    url: response.url,
+                    dataType: "json",
+                    success: function (data) {
+                        var request = {
+                            name: response.name +"_response",
+                            value: data
+                        }
+                        CORSMsg.SendMsg(JSON.stringify(request), iframe.contentWindow);
+                    }
+                });
+            } else if(response.type == "POST")
+            {
+                $.ajax({
+                    type: response.type,
+                    contentType: response.contentType,
+                    url: response.url,
+                    data: response.data,
+                    dataType: "json",
+                    success: function (data) {
+                        var request = {
+                            name: response.name + "_response",
+                            value: data
+                        }
+                        window.location.href = "NewDashboard.html";
+                    }
+                });
+            }
+           
+        }
+    </script>
+</body>
+</html>

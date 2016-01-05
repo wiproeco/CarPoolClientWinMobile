@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <!--
+        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
+        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.gstatic.com 'unsafe-inline' 'self' https://*.googleapis.com 'unsafe-eval'; img-src *; font-src *; media-src *">-->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-eval' *; style-src 'unsafe-inline' *; img-src * data:"> 
+    <title>Wipro Car Pool App</title>
+
+    <!-- CarPoolApp references -->
+    <link href="css/index.css" rel="stylesheet" />
+    <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/form-elements.css">
+    <!--<link rel="stylesheet" href="css/style.css">-->
+    <link rel="stylesheet" href="css/index.css">
+    <!--<script src="cordova.js"></script>-->
+    <style>
+        body{
+            width:100%;
+            height:100%;
+        }
+        #wrapper {
+            position: relative;
+        }
+
+        #over_map {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 99;
+            width: 97%;
+        }
+         #over_map_button {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 99;
+            width: 97%;
+        }
+
+         .menuLink {
+            color: #FFF;
+            cursor: pointer;
+        }
+
+        .menuLink:hover{
+            color:black;
+            background-color:#808080;
+        }
+
+    </style>   
+</head>
+<body ng-app="myApp" ng-controller="dashboardCtrl">
+    <!-- Navigation -->
+    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <nav id="sidebar-wrapper">
+        <!--<a id="menu-close" href="#top" class="btn btn-light btn-md pull-right toggle"><i class="fa fa-times"></i></a>-->
+        <ul class="sidebar-nav">
+            <!--<li class="sidebar-brand">
+            <a href="#top" onclick=$("#menu-close").click(); style="float:left"><p>Wipro Car Pooling</p></a>
+        </li>-->
+            <li id="lnkDashboard" class="menuLink">
+                Dashboard
+            </li>
+            <li id="lnkNotifications" class="menuLink">Notifications</li>
+            <li id="lnkLogOut" class="menuLink">Log Out</li>
+        </ul>
+
+        <div class="clearfix"></div>
+    </nav>   
+    <div class="container-fluid">              
+        <div class="row">
+            <div class="wrapper">
+                <div id="map" data-tap-disabled="true"></div>
+                <div id="over_map">
+                    <input type="text" id="txtDestination" style="width:84%; float:left"/>
+                    <div id="demo"></div>
+                </div>
+                <!--<div id="over_map_button">
+                    <input type="button" id="btnRide" class="btn btn-primary" style="width:100%;" value="Ride Now" data-toggle="modal" data-target="#carmodal" />
+                    
+                </div>-->
+            </div>
+        </div>
+
+        <div class="modal fade" id="carmodal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form class="form-horizontal" role="form">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Car Details</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-4" for="email">Car Owner: </label>
+                                <div class="col-sm-8">
+                                    <span id="carOwner"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4" for="pwd">Car Number:</label>
+                                <div class="col-sm-8">
+                                    <span id="carNumber"></span>
+                                </div>
+                            </div>      
+                            <div class="form-group">
+                                <label class="control-label col-sm-4" for="pwd">No. of seats available:</label>
+                                <div class="col-sm-8">
+                                    <span id="carSeatsCount"></span>
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label class="control-label col-sm-4" for="pwd">From:</label>
+                                <div class="col-sm-8">
+                                    <span id="carFrom"></span>
+                                </div>
+                            </div>    
+                            <div class="form-group">
+                                <label class="control-label col-sm-4" for="pwd">To:</label>
+                                <div class="col-sm-6">
+                                    <span id="carTo"></span>
+                                </div>
+                            </div>  
+                            <div class="form-group">
+                                <label class="control-label col-sm-4" for="pwd">Pick up points:</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" id="ddlPickuppoints" style="width:80%">                                        
+                                    </select>
+                                </div>
+                            </div>                                                
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="btnJoinRide">Join Ride</button>                           
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- Cordova reference, this is added to your app when it's built. -->
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="scripts/jquery-1.11.1.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/jquery.backstretch.min.js"></script>
+    <script src="scripts/scripts.js"></script>
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/CorsMsg.js"></script>
+    <script src="scripts/ride.js"></script>
+    <script src="scripts/custom.js"></script>
+    <script src="scripts/NotificationClientService.js"></script>
+</body>
+</html>

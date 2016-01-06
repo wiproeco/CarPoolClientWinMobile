@@ -9,7 +9,7 @@ app.controller('userCtrl', function ($scope, $http, $window) {
         document.getElementById("Loading").style.display = "block";
         if (email != "" && pass != "" && email != undefined && pass != undefined) {
             //$http.get("http://wiprocarpool.azurewebsites.net/authenticate/" + email + "/" + pass)
-            $http.get("http://localhost:1513/authenticate/" + email + "/" + pass)
+            $http.get("http://wiprocarpool.azurewebsites.net/authenticate/" + email + "/" + pass)
             .success(function (response) {
                 var data = JSON.stringify(response);
                 var result = JSON.parse(data);
@@ -57,6 +57,7 @@ app.controller('userCtrl', function ($scope, $http, $window) {
         var Mobile = $scope.txtRegMobile;
         var Gender = $scope.inputRegGender;
         var isCarOwner = $scope.edit;
+        var binaryImage = window.localStorage.getItem("binaryImage");
         var carNo = "";
         var seatCap = "";
         if (Password != ConfirmPwd) {
@@ -83,6 +84,7 @@ app.controller('userCtrl', function ($scope, $http, $window) {
                 isowner: isCarOwner,
                 carNo: carNo,
                 totalseats: seatCap,
+                photo: binaryImage,
                 rides: [
                 ]
             });
@@ -99,6 +101,7 @@ app.controller('userCtrl', function ($scope, $http, $window) {
                 $scope.txtRegMobile = '';
                 $scope.carno = '';
                 $scope.processing = false;
+                window.localStorage.removeItem("binaryImage");
             });
             res.error(function (data, status, headers, config) {
                 $scope.iserror = false;
@@ -316,7 +319,8 @@ app.controller('ownernotificationCtrl', function ($scope, $http, $window) {
     var userId = window.localStorage.getItem("userid");
     $scope.userName = localStorage.getItem("username");
     var todayDate = new Date();
-    var date = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
+    //var date = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
+    var date = todayDate.getFullYear() + "-" + ("0" + (todayDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (todayDate.getDate())).slice(-2);
     //var url = "http://wiprocarpool.azurewebsites.net/getnotitifications/bae03711-08e6-7d8f-8101-457caa0368a8/2011-07-14";
     var url = "http://wiprocarpool.azurewebsites.net/getnotitifications/" + userId + "/" + date.toString();
     $http.get(url)

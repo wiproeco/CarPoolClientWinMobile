@@ -1,40 +1,39 @@
 ﻿
 var app = angular.module('myApp', []);
 
-
-
 app.controller('userCtrl', function ($scope, $http, $window) {
     $scope.authenticated = true;
     $scope.login = function () {
-       var email = $scope.txtEmail;
-       var pass = $scope.txtPassword;       
-       document.getElementById("Loading").style.display = "block";
+        var email = $scope.txtEmail;
+        var pass = $scope.txtPassword;
+        document.getElementById("Loading").style.display = "block";
         if (email != "" && pass != "" && email != undefined && pass != undefined) {
-            $http.get("http://wiprocarpool.azurewebsites.net/authenticate/" + email + "/" + pass)
+            //$http.get("http://wiprocarpool.azurewebsites.net/authenticate/" + email + "/" + pass)
+            $http.get("http://localhost:1513/authenticate/" + email + "/" + pass)
             .success(function (response) {
                 var data = JSON.stringify(response);
                 var result = JSON.parse(data);
                 if (result.length > 0) {
                     var userid = result[0].id;
                     var isowner = result[0].isowner;
-                    //var username = result[0].userName;
+                    var username = result[0].userName;
                     window.localStorage.setItem("userid", userid);
                     window.localStorage.setItem("isowner", isowner);
-                    //window.localStorage.setItem("username", username);
+                    window.localStorage.setItem("username", username);
                     document.location.href = 'NewDashboard.html';
                 }
                 else {
                     document.getElementById("Loading").style.display = "none";
                     $scope.authenticated = false;
                 }
-              
+
             })
             .error(function (data, status) {
-                $scope.authenticated = false;                
+                $scope.authenticated = false;
                 document.getElementById("Loading").style.display = "none";
 
             });
-            
+
         }
         else { document.getElementById("Loading").style.display = "none"; }
     }
@@ -50,6 +49,7 @@ app.controller('userCtrl', function ($scope, $http, $window) {
     $scope.success = false;
     $scope.ismatch = true;
     $scope.AddUser = function () {
+
         var UserName = $scope.txtRegUserName;
         var Password = $scope.txtRegPwd;
         var ConfirmPwd = $scope.txtRegConfirmPwd;
@@ -86,7 +86,7 @@ app.controller('userCtrl', function ($scope, $http, $window) {
                 rides: [
                 ]
             });
-
+            $scope.processing = true;
             var res = $http.post('http://wiprocarpool.azurewebsites.net/register', user,
                       { headers: { 'Content-Type': 'application/json' } });
             res.success(function (data, status, headers, config) {
@@ -98,7 +98,7 @@ app.controller('userCtrl', function ($scope, $http, $window) {
                 $scope.txtRegEmail = '';
                 $scope.txtRegMobile = '';
                 $scope.carno = '';
-
+                $scope.processing = false;
             });
             res.error(function (data, status, headers, config) {
                 $scope.iserror = false;
@@ -110,10 +110,13 @@ app.controller('userCtrl', function ($scope, $http, $window) {
                 $scope.txtRegEmail = '';
                 $scope.txtRegMobile = '';
                 $scope.carno = '';
+                $scope.processing = false;
+
             });
 
 
         }
+
         return false;
     }
 
@@ -170,10 +173,14 @@ app.controller('searchCtrl', function ($scope, $http, $window, $rootScope) {
 
 });
 
+app.controller('newRideCtrl', function ($scope, $http, $window) {
 
+    $scope.userName = localStorage.getItem("username");
+    navigationLinks($scope, $http, $window);
+});
 
-app.controller('dashboardCtrl', function ($scope, $http, $window) {   
-
+app.controller('dashboardCtrl', function ($scope, $http, $window) {
+    $scope.userName = localStorage.getItem("username");
     PushNotifications();
     navigationLinks($scope, $http, $window);
 });
@@ -199,11 +206,11 @@ function navigationLinks($scope, $http, $window) {
 
         window.location.href = "NewDashboard.html";
     }
-   
+
     $scope.MyNotifications = function () {
 
         var isowner = window.localStorage.getItem("isowner");
-        var notificationurl= '';
+        var notificationurl = '';
         if (isowner == "true")
             notificationurl = "ownernotification.html";
         else
@@ -211,7 +218,7 @@ function navigationLinks($scope, $http, $window) {
 
         window.location.href = notificationurl;
 
-        
+
     }
 
     $scope.ShareRide = function () {
@@ -225,8 +232,8 @@ function navigationLinks($scope, $http, $window) {
     }
 
     $scope.JoinRide = function () {
-        //window.sessionStorage.h
-        window.location.href = "RideContainer.html";//"ride.html";
+
+        window.location.href = "RideContainer.html";
     }
 
     $scope.logOut = function () {
@@ -235,8 +242,7 @@ function navigationLinks($scope, $http, $window) {
     }
 }
 
-function PushNotifications()
-{
+function PushNotifications() {
     var notificationurl = "http://wiprocarpool.azurewebsites.net/";
     var isowner = window.localStorage.getItem("isowner");
     var userId = window.localStorage.getItem("userid");
@@ -257,19 +263,15 @@ function PushNotifications()
     NotificationClientService.AutomaticNotifications(notificationurl, 2, totaltimeout, null, NoticationCallback);
 }
 
-function NoticationCallback(data)
-{
+function NoticationCallback(data) {
     var isowner = window.localStorage.getItem("isowner");
 
-    if (data != undefined && data != null && data.data.length > 0)
-    {
-        if (isowner == "true")
-        {
+    if (data != undefined && data != null && data.data.length > 0) {
+        if (isowner == "true") {
             $("#MyNotifications").css("backgroundColor", "red");
             CancelNotification.Clear(NotificationClientService.RefreshIntervalId);
         }
-        else
-        {
+        else {
             if (data.data[0].status == "pending") {
                 $("#MyNotifications").css("backgroundColor", "yellow");
             }
@@ -287,6 +289,7 @@ app.controller('usernotificationCtrl', function ($scope, $http, $window) {
     navigationLinks($scope, $http, $window);
     $scope.notificationdata = "";
     var userId = window.localStorage.getItem("userid");
+    $scope.userName = localStorage.getItem("username");
 
     //var url = "http://wiprocarpool.azurewebsites.net/receivenotitifications/53946907-3b48-6904-f599-db29de2e74e6";
     var url = "http://wiprocarpool.azurewebsites.net/receivenotitifications/" + userId;
@@ -303,14 +306,15 @@ app.controller('usernotificationCtrl', function ($scope, $http, $window) {
             }).error(function (data, status) {
                 document.getElementById("Loading").style.display = "none";
             });
-   
+
 });
 
 app.controller('ownernotificationCtrl', function ($scope, $http, $window) {
-   
+    document.getElementById("Loading").style.display = "block";
     navigationLinks($scope, $http, $window);
     $scope.notificationdata = "";
     var userId = window.localStorage.getItem("userid");
+    $scope.userName = localStorage.getItem("username");
     var todayDate = new Date();
     var date = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
     //var url = "http://wiprocarpool.azurewebsites.net/getnotitifications/bae03711-08e6-7d8f-8101-457caa0368a8/2011-07-14";
@@ -323,13 +327,14 @@ app.controller('ownernotificationCtrl', function ($scope, $http, $window) {
                     $scope.notificationdata = result;
                 }
                 document.getElementById("Loading").style.display = "none";
-               
+
             }).error(function (data, status) {
                 // alert(data);    
                 document.getElementById("Loading").style.display = "none";
             });
 
     $scope.updateRideNotification = function (ownerid, rideid, passengerid, bookingstatus) {
+        document.getElementById("Loading").style.display = "block";
         var user = JSON.stringify({
             id: ownerid,
             rideid: rideid,
@@ -343,13 +348,15 @@ app.controller('ownernotificationCtrl', function ($scope, $http, $window) {
             window.location.href = 'ownernotification.html';
             $scope.iserror = true;
             $scope.success = true;
+            document.getElementById("Loading").style.display = "none";
         }).error(function (data, status) {
             //alert(data);
             //$scope.iserror = false;
             //$scope.success = false;
+            document.getElementById("Loading").style.display = "none";
         });
     }
-   
+
 });
 
 

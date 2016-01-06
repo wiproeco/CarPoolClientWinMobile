@@ -91,25 +91,25 @@ var carOwnerId = null;
 
         });
 
-        $("#lnkDashboard").click(function () {
-            window.location.href = "NewDashboard.html";
-        });
+        //$("#lnkDashboard").click(function () {
+        //    window.location.href = "NewDashboard.html";
+        //});
 
-        $("#lnkNotifications").click(function () {
-            var isowner = window.localStorage.getItem("isowner");
-            var notificationurl = '';
-            if (isowner == "true")
-                notificationurl = "ownernotification.html";
-            else
-                notificationurl = "usernotification.html";
+        //$("#lnkNotifications").click(function () {
+        //    var isowner = window.localStorage.getItem("isowner");
+        //    var notificationurl = '';
+        //    if (isowner == "true")
+        //        notificationurl = "ownernotification.html";
+        //    else
+        //        notificationurl = "usernotification.html";
 
-            window.location.href = notificationurl;
-        });
+        //    window.location.href = notificationurl;
+        //});
 
-        $("#lnkLogOut").click(function () {
-            window.localStorage.setItem("userid", 0);
-            window.location.href = 'index.html';
-        });
+        //$("#lnkLogOut").click(function () {
+        //    window.localStorage.setItem("userid", 0);
+        //    window.location.href = 'index.html';
+        //});
 
     }
 

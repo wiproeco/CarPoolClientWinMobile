@@ -12,16 +12,15 @@
 
     <title></title>
     <style>
-        iframe { 
-            width:100%;
-            /*border:0;
-            height:100%;
-            width:100%;
-            position:absolute;
-            top:0;
-            left:0;
-            right:0;
-            bottom:0;*/
+        iframe {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border:0;
         }
     </style>
 </head>
@@ -55,8 +54,11 @@
             </div>
         </div>
     </nav>
-
-    <iframe id="inlineWebContentIframe" src="ms-appx-web:///www/ride.html"></iframe>
+    <div class="container-fluid">
+        <div class="row">
+            <iframe id="inlineWebContentIframe" src="ms-appx-web:///www/ride.html"></iframe>
+        </div>
+    </div>
 
     <script src="scripts/CorsMsg.js"></script>
     <script src="scripts/jquery-1.11.1.min.js"></script>
@@ -66,11 +68,11 @@
     <script src="scripts/NotificationClientService.js"></script>
     <script src="scripts/bootstrap.min.js"></script>
     <script type="text/javascript">
-       
+
         CORSMsg.ReceiveMsg(function (jData) {
             var response = JSON.parse(jData.data);
             ServiceCall(response);
-            
+
         }, true);
 
         (function () {
@@ -82,24 +84,22 @@
                 iframe = document.getElementById("inlineWebContentIframe");
                 navigator.geolocation.getCurrentPosition(function (position) {
                     var request = {
-                        name : "position",
+                        name: "position",
                         value: {
-                            pos : position,
+                            pos: position,
                             userId: localStorage.getItem("userid")
                         }
                     }
                     CORSMsg.SendMsg(JSON.stringify(request), iframe.contentWindow);
                 });
             };
-            
+
         })();
 
-        function ServiceCall(response)
-        {
+        function ServiceCall(response) {
             var domain = "ms-appx-web://" + document.location.host;
             var iframe = document.getElementById("inlineWebContentIframe");
-            if (response.type == "GET")
-            {
+            if (response.type == "GET") {
                 $.ajax({
                     type: response.type,
                     contentType: response.contentType,
@@ -107,14 +107,13 @@
                     dataType: "json",
                     success: function (data) {
                         var request = {
-                            name: response.name +"_response",
+                            name: response.name + "_response",
                             value: data
                         }
                         CORSMsg.SendMsg(JSON.stringify(request), iframe.contentWindow);
                     }
                 });
-            } else if(response.type == "POST")
-            {
+            } else if (response.type == "POST") {
                 $.ajax({
                     type: response.type,
                     contentType: response.contentType,
@@ -130,8 +129,9 @@
                     }
                 });
             }
-           
+
         }
     </script>
 </body>
+
 </html>

@@ -50,6 +50,7 @@
             return;
 
         var $http = angular.injector(["ng"]).get("$http");
+        $http.defaults.cache = false;
         $http.get(serviceeUrl).then(hndlrName, null);
 
        

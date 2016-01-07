@@ -31,7 +31,8 @@
             z-index: 99;
             width: 97%;
         }
-         #over_map_button {
+
+        #over_map_button {
             position: absolute;
             bottom: 10px;
             left: 10px;
@@ -52,20 +53,15 @@
     </style>   
 </head>
 <body ng-app="myApp" ng-controller="dashboardCtrl">
-    <!-- Navigation -->
 
     <div class="container-fluid">              
         <div class="row">
             <div class="wrapper">
                 <div id="map" data-tap-disabled="true"></div>
-                <div id="over_map">
-                    <input type="text" id="txtDestination" style="width:84%; float:left"/>
+                <div id="over_map" >
+                    <input type="text" id="txtDestination" class="form-control"/>
                     <div id="demo"></div>
                 </div>
-                <!--<div id="over_map_button">
-                    <input type="button" id="btnRide" class="btn btn-primary" style="width:100%;" value="Ride Now" data-toggle="modal" data-target="#carmodal" />
-                    
-                </div>-->
             </div>
         </div>
 
@@ -115,7 +111,12 @@
                                     <select class="form-control" id="ddlPickuppoints" style="width:80%">                                        
                                     </select>
                                 </div>
-                            </div>                                                
+                            </div>   
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <input type="checkbox" id="chkreqforcurrgeolocn" name="chkreqforcurrgeolocn">Request for current location
+                                </div>
+                            </div>                                             
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" id="btnJoinRide">Join Ride</button>                           

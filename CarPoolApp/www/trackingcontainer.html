@@ -57,13 +57,14 @@
     </nav>
     <div class="container-fluid">
         <div class="row">
-            <iframe id="inlineWebContentIframe" src="ms-appx-web:///www/ride.html"></iframe>
+            <iframe id="inlineWebContentIframe" src="ms-appx-web:///www/tracking.html"></iframe>
         </div>
     </div>
 
     <script src="scripts/CorsMsg.js"></script>
     <script src="scripts/jquery-1.11.1.min.js"></script>
     <script src="scripts/angular.min.js"></script>
+    <script src="scripts/common.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/custom.js"></script>
     <script src="scripts/NotificationClientService.js"></script>
@@ -83,16 +84,11 @@
             document.body.onload = function () {
                 var domain = "ms-appx-web://" + document.location.host;
                 iframe = document.getElementById("inlineWebContentIframe");
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    var request = {
-                        name: "position",
-                        value: {
-                            pos: position,
-                            userId: localStorage.getItem("userid")
-                        }
-                    }
-                    CORSMsg.SendMsg(JSON.stringify(request), iframe.contentWindow);
-                });
+                var request = {
+                    name: "ownerid",
+                    value: getUrlParameter('ownerid')
+                }
+                CORSMsg.SendMsg(JSON.stringify(request), iframe.contentWindow);
             };
 
         })();

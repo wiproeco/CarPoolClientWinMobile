@@ -59,18 +59,6 @@ var position;
             }
 
             CORSMsg.SendMsg(JSON.stringify(request), window.parent);
-
-            //$.ajax({
-            //    type: "GET",
-            //    contentType: "application/json",
-            //    url: "http://wiprocarpool.azurewebsites.net/getridedetails/" + userId + "/" + rideId,
-            //    dataType: "json",
-            //    success: function (data) {
-            //        currentRideObject = data[0];
-            //        getLocationByRideId(data[0]);
-            //    }
-            //});
-            
         }
         
         directionsService = new google.maps.DirectionsService();
@@ -133,36 +121,6 @@ var position;
             }
 
             CORSMsg.SendMsg(JSON.stringify(request), window.parent);
-
-            //localStorage.setItem("currentRideObject", JSON.stringify(ride));
-                        
-            //if (rideId === undefined) {
-            //    window.location.href = "ridedetails.html";
-            //}
-            //else {
-            //    window.location.href = "ridedetails.html?rideid=" + currentRideObject.rideid;
-            //}
-
-        });
-
-        $("#lnkDashboard").click(function () {
-            window.location.href = "NewDashboard.html";
-        });
-
-        $("#lnkNotifications").click(function () {
-            var isowner = window.localStorage.getItem("isowner");
-            var notificationurl = '';
-            if (isowner == "true")
-                notificationurl = "ownernotification.html";
-            else
-                notificationurl = "usernotification.html";
-
-            window.location.href = notificationurl;
-        });
-
-        $("#lnkLogOut").click(function () {
-            window.localStorage.setItem("userid", 0);
-            window.location.href = 'index.html';
         });
 
         google.maps.event.addListener(autocompleteStart, 'place_changed', function () {
@@ -181,7 +139,7 @@ var position;
             map.setCenter(latlngbounds.getCenter());
             map.fitBounds(latlngbounds);
 
-            google.maps.event.addListener(map, 'mousedown', function (event) {
+            google.maps.event.addListener(map, 'click', function (event) {
                 var latLong = event.latLng;
                 var geocoder = new google.maps.Geocoder;
                 waypoints.push({ location: latLong, stopover: true });

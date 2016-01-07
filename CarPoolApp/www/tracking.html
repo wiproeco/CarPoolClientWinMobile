@@ -2,23 +2,16 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <!--
-        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
-        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
-    -->
     <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.gstatic.com 'unsafe-eval' 'self' https://*.googleapis.com 'unsafe-eval'; img-src *; font-src *; media-src *">-->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-eval' *; style-src 'unsafe-inline' *; img-src * data:"> 
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' *; img-src *;">-->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-eval' *; style-src 'unsafe-inline' *; img-src * data:">
     <title>Wipro Car Pool App</title>
 
-    <!-- CarPoolApp references -->
-    <!--<link href="css/index.css" rel="stylesheet" />-->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-    <!--<link rel="stylesheet" href="css/form-elements.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/index.css">-->
-    <!--<script src="cordova.js"></script>-->
+    <!--<script src="http://maps.googleapis.com/maps/api/js">-->
+    <!--</script>-->
     <style>
         #wrapper {
             position: relative;
@@ -32,43 +25,25 @@
             width: 97%;
         }
 
-        #over_map_button {
-            position: absolute;
-            bottom: 10%;
-            left: 20%;
-            z-index: 99;
-            width: 97%;
-        }
-
-         .menuLink {
+        .menuLink {
             color: #FFF;
             cursor: pointer;
         }
 
-        .menuLink:hover{
-            color:black;
-            background-color:#808080;
+        .menuLink:hover {
+            color: black;
+            background-color: #808080;
         }
     </style>
-
 </head>
 <body ng-app="myApp" ng-controller="dashboardCtrl">
     <!-- Navigation -->
-    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
-  
+    <!--<a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>-->
+
     <div class="container-fluid">
         <div class="row">
             <div class="wrapper">
                 <div id="map" data-tap-disabled="true"></div>
-                <div id="over_map">
-                    <input type="text" id="txtDestination" class="form-control" />
-                    <div id="demo"></div>
-                </div>
-                <div id="over_map_button">
-                    <input type="button" id="btnRoute" value="Get Route" class="btn btn-primary" />
-                    <input type="button" id="btnReset" value="Reset" class="btn btn-primary" />
-                    <input type="button" id="btnSubmit" value="Submit" class="btn btn-primary" />
-                </div>
             </div>
         </div>
     </div>
@@ -82,8 +57,8 @@
     <script src="scripts/common.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/CorsMsg.js"></script>
-    <script src="scripts/marker.js"></script>
     <script src="scripts/custom.js"></script>
+    <script src="scripts/tracking.js"></script>
     <script src="scripts/NotificationClientService.js"></script>
 </body>
 </html>

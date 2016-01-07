@@ -114,7 +114,7 @@
                                 <tr ng-repeat="data in notificationdata">
                                     <td>{{$index + 1}}</td>
                                     <td>
-                                        <img ng-src="{{data.photo}}" alt="Alternate Text" height="50" width="50" />
+                                        <img ng-src="{{data.photo}}" alt="pic" height="80" width="80" />
                                     </td>
                                     <td>
                                         <div>
@@ -122,6 +122,10 @@
                                                 <img border="0" alt="MakeCall" src="images/makecall.png" width="25" height="25">
                                                 {{data.ownername }}
                                             </a>
+                                            <br />
+                                            <div ng-if="data.isownercurrentlocnallowed">
+                                                <a ng-click="trackownerlocation(data.ownerid);" href="#" class="btn btn-sm btn-success">Track the Car</a>
+                                            </div>
                                         </div>
                                     </td>
                                     <td>{{data.status}}</td>
@@ -135,7 +139,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    © 2015 - Wipro Technologies
+                    Powered By - Wipro Technologies Ltd.
                 </div>
             </div>
         </footer>

@@ -116,11 +116,15 @@
                                 <tr ng-repeat="data in notificationdata">
                                     <!--<td>{{$index + 1}}</td>-->
                                     <td>
+                                        <div ng-if="data.reqforcurrgeolocn">
+                                            <input type="checkbox" id="chkuserreqforcurrgeolocn" name="chkuserreqforcurrgeolocn" ng-model="data.reqforcurrgeolocn">Requested for current location
+                                            <br />
+                                        </div>
                                         <a href="#" alt="Accept" ng-click="updateRideNotification(data.ownerid, data.rideid, data.passengerid,'accepted');"><i class="fa fa-thumbs-up fa-2x"></i></a>
                                         <a href="#" alt="Reject" ng-click="updateRideNotification(data.ownerid, data.rideid, data.passengerid,'rejected');"><i class="fa fa-thumbs-down fa-2x"></i></a>
                                     </td>
                                     <td>
-                                        <img ng-src="{{data.photo}}" height="50" width="50" />
+                                        <img ng-src="{{data.photo}}" alt="pic" height="80" width="80" />
                                     </td>
                                     <td>
                                         <div>
@@ -145,7 +149,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    © 2015 - Wipro Technologies
+                    Powered By - Wipro Technologies Ltd.
                 </div>
             </div>
         </footer>

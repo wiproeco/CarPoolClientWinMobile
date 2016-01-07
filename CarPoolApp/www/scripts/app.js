@@ -69,7 +69,6 @@ app.controller('userCtrl', function ($scope, $http, $window) {
             carNo = $scope.carno;
             seatCap = $scope.seats;
         }
-        //$window.alert(UserName + ',' + Password + ',' + Email + ',' + Mobile + ',' + Gender + ',' + isCarOwner + ',' + carNo + ',' + seatCap + ',' + spoint + ',' + epoint);
         if ($scope.ismatch && UserName != "" && Password != "" && ConfirmPwd != "" && Email != "" && Mobile != "" && Gender != ""
            && UserName != undefined && Password != undefined && ConfirmPwd != undefined && Email != undefined && Mobile != undefined && Gender != undefined) {
 
@@ -85,6 +84,9 @@ app.controller('userCtrl', function ($scope, $http, $window) {
                 carNo: carNo,
                 totalseats: seatCap,
                 photo: binaryImage,
+                currgeolocnaddress: "",
+                currgeolocnlat: "",
+                currgeolocnlong: "",
                 rides: [
                 ]
             });
@@ -251,7 +253,7 @@ function PushNotifications() {
     var userId = window.localStorage.getItem("userid");
     var todayDate = new Date();
     var date = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
-
+    //var date = todayDate.getFullYear() + "-" + ("0" + (todayDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (todayDate.getDate())).slice(-2);
     var totaltimeout = 5;
 
     if (isowner == "true") {
@@ -262,7 +264,7 @@ function PushNotifications() {
         notificationurl = notificationurl + "receivenotitifications/" + userId;
     }
 
-    $("#MyNotifications").css("backgroundColor", "green");
+    $("#MyNotifications").css("color", "green");
     NotificationClientService.AutomaticNotifications(notificationurl, 2, totaltimeout, null, NoticationCallback);
 }
 
@@ -271,15 +273,15 @@ function NoticationCallback(data) {
 
     if (data != undefined && data != null && data.data.length > 0) {
         if (isowner == "true") {
-            $("#MyNotifications").css("backgroundColor", "red");
+            $("#MyNotifications").css("color", "red");
             CancelNotification.Clear(NotificationClientService.RefreshIntervalId);
         }
         else {
             if (data.data[0].status == "pending") {
-                $("#MyNotifications").css("backgroundColor", "yellow");
+                $("#MyNotifications").css("color", "yellow");
             }
             else {
-                $("#MyNotifications").css("backgroundColor", "red");
+                $("#MyNotifications").css("color", "red");
                 CancelNotification.Clear(NotificationClientService.RefreshIntervalId);
             }
         }
@@ -293,7 +295,7 @@ app.controller('usernotificationCtrl', function ($scope, $http, $window) {
     $scope.notificationdata = "";
     var userId = window.localStorage.getItem("userid");
     $scope.userName = localStorage.getItem("username");
-
+    $http.defaults.cache = false;
     //var url = "http://wiprocarpool.azurewebsites.net/receivenotitifications/53946907-3b48-6904-f599-db29de2e74e6";
     var url = "http://wiprocarpool.azurewebsites.net/receivenotitifications/" + userId;
     $http.get(url)
@@ -309,7 +311,9 @@ app.controller('usernotificationCtrl', function ($scope, $http, $window) {
             }).error(function (data, status) {
                 document.getElementById("Loading").style.display = "none";
             });
-
+    $scope.trackownerlocation = function (ownerid) {
+        window.location.href = "trackingcontainer.html?ownerid=" + ownerid;
+    };
 });
 
 app.controller('ownernotificationCtrl', function ($scope, $http, $window) {
@@ -319,10 +323,11 @@ app.controller('ownernotificationCtrl', function ($scope, $http, $window) {
     var userId = window.localStorage.getItem("userid");
     $scope.userName = localStorage.getItem("username");
     var todayDate = new Date();
-    //var date = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
-    var date = todayDate.getFullYear() + "-" + ("0" + (todayDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (todayDate.getDate())).slice(-2);
+    var date = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
+    //var date = todayDate.getFullYear() + "-" + ("0" + (todayDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (todayDate.getDate())).slice(-2);
     //var url = "http://wiprocarpool.azurewebsites.net/getnotitifications/bae03711-08e6-7d8f-8101-457caa0368a8/2011-07-14";
     var url = "http://wiprocarpool.azurewebsites.net/getnotitifications/" + userId + "/" + date.toString();
+    $http.defaults.cache = false;
     $http.get(url)
             .success(function (response) {
                 var data = JSON.stringify(response);
@@ -333,17 +338,23 @@ app.controller('ownernotificationCtrl', function ($scope, $http, $window) {
                 document.getElementById("Loading").style.display = "none";
 
             }).error(function (data, status) {
-                // alert(data);    
                 document.getElementById("Loading").style.display = "none";
             });
 
     $scope.updateRideNotification = function (ownerid, rideid, passengerid, bookingstatus) {
         document.getElementById("Loading").style.display = "block";
+        var userreqforcurrgeolocnvalue = "";
+
+        if (document.getElementById("chkuserreqforcurrgeolocn").checked)
+            userreqforcurrgeolocnvalue = true;
+        else
+            userreqforcurrgeolocnvalue = false;
         var user = JSON.stringify({
             id: ownerid,
             rideid: rideid,
             userid: passengerid,
-            status: bookingstatus
+            status: bookingstatus,
+            reqforcurrgeolocn:userreqforcurrgeolocnvalue
         });
 
         var res = $http.post('http://wiprocarpool.azurewebsites.net/rideconfirmation', user, { headers: { 'Content-Type': 'application/json' } });

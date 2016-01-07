@@ -77,39 +77,26 @@ var carOwnerId = null;
           });
                
 
-        $("#btnJoinRide").click(function () {
+            $("#btnJoinRide").click(function () {
+                var reqforcurrgeolocnvalue = "";
+
+                if (document.getElementById("chkreqforcurrgeolocn").checked)
+                    reqforcurrgeolocnvalue = true;
+                else
+                    reqforcurrgeolocnvalue = false;
+
             var request = {
                 name: "joinride",
                 type: "POST",
                 contentType: "application/json",
                 url: "http://wiprocarpool.azurewebsites.net/joinride/",
-                data: JSON.stringify({ carownerId: carOwnerId, userId: userId, rideid: rideObject.rideid, boardingid: $("#ddlPickuppoints").val() }),
+                data: JSON.stringify({ carownerId: carOwnerId, userId: userId, rideid: rideObject.rideid, boardingid: $("#ddlPickuppoints").val(), reqforcurrgeolocn: reqforcurrgeolocnvalue }),
                 dataType: "json"
             }
 
             CORSMsg.SendMsg(JSON.stringify(request), window.parent);
 
         });
-
-        //$("#lnkDashboard").click(function () {
-        //    window.location.href = "NewDashboard.html";
-        //});
-
-        //$("#lnkNotifications").click(function () {
-        //    var isowner = window.localStorage.getItem("isowner");
-        //    var notificationurl = '';
-        //    if (isowner == "true")
-        //        notificationurl = "ownernotification.html";
-        //    else
-        //        notificationurl = "usernotification.html";
-
-        //    window.location.href = notificationurl;
-        //});
-
-        //$("#lnkLogOut").click(function () {
-        //    window.localStorage.setItem("userid", 0);
-        //    window.location.href = 'index.html';
-        //});
 
     }
 

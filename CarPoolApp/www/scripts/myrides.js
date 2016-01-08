@@ -14,7 +14,7 @@ app.controller('myRideCtrl', function ($scope, $http, $window) {
     getAllRideDetails($scope, $http, userid);
     $scope.cancel = function (rideId) {
         document.getElementById("Loading").style.display = "block";
-        $http.post("http://wiprocarpool.azurewebsites.net/cancelride", { id: localStorage.getItem("userid"), rideid: rideId })
+        $http.post("http://wiprocarpoolwin.azurewebsites.net/cancelride", { id: localStorage.getItem("userid"), rideid: rideId })
        .success(function (response) {
            getAllRideDetails($scope, $http, localStorage.getItem("userid"));
            document.getElementById("Loading").style.display = "none";
@@ -40,14 +40,13 @@ app.controller('myRideCtrl', function ($scope, $http, $window) {
 
 function getAllRideDetails($scope, $http, userid) {
     document.getElementById("Loading").style.display = "block";
-    $http.get("http://wiprocarpool.azurewebsites.net/getallridedetails/" + userid)
+    // rnd datetime is to disable cache
+    $http.get("http://wiprocarpoolwin.azurewebsites.net/getallridedetails/" + userid + "?rnd=" + new Date().getTime())
     .success(function (response) {
         $scope.rides = response[0].rides;
         document.getElementById("Loading").style.display = "none";
-
     })
     .error(function (data, status) {
-        //alert('failed');
         document.getElementById("Loading").style.display = "none";
     });
 }
@@ -135,9 +134,9 @@ app.controller('myRideDetailsCtrl', function ($scope, $http, $window) {
         $scope.success = false;
         //alert(JSON.stringify(rideObject));
 
-        $http.post("http://wiprocarpool.azurewebsites.net/updateroute/", { userid: localStorage.getItem("userid"), ride: rideObject })
+        $http.post("http://wiprocarpoolwin.azurewebsites.net/updateroute/", { userid: localStorage.getItem("userid"), ride: rideObject })
        .success(function (response) {
-           $http.post("http://wiprocarpool.azurewebsites.net/updatecarlocation/", {
+           $http.post("http://wiprocarpoolwin.azurewebsites.net/updatecarlocation/", {
                userid: localStorage.getItem("userid"), currgeolocnaddress: rideObject.startpoint, currgeolocnlat: rideObject.startlat, currgeolocnlong: rideObject.startlng
            })
 

@@ -84,6 +84,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetPlatformIdentifier>MDD</TargetPlatformIdentifier>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <Target Name="EnsureBuildPrerequisites">
     <!-- These errors will trigger if building from inside Visual Studio and requirements could not be determined -->

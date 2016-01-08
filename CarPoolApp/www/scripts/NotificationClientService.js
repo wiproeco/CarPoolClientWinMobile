@@ -49,11 +49,25 @@
         if (serviceeUrl == null)
             return;
 
-        var $http = angular.injector(["ng"]).get("$http");
-        $http.defaults.cache = false;
-        $http.get(serviceeUrl).then(hndlrName, null);
+        //var $http = angular.injector(["ng"]).get("$http");
+        //$http.defaults.cache = false;
+        //$http.get(serviceeUrl, { timeout: 5000 }).then(hndlrName, null);
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json",
+            url: serviceeUrl,
+            cache: false,
 
-       
+            success: function (data) {
+                if (hndlrName != null)
+                    hndlrName(data);
+            },
+
+            error: function (error) {
+                throw error;
+            }
+        });
     }
 
     return {

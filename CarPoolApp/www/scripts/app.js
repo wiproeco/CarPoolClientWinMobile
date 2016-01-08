@@ -8,8 +8,8 @@ app.controller('userCtrl', function ($scope, $http, $window) {
         var pass = $scope.txtPassword;
         document.getElementById("Loading").style.display = "block";
         if (email != "" && pass != "" && email != undefined && pass != undefined) {
-            //$http.get("http://wiprocarpool.azurewebsites.net/authenticate/" + email + "/" + pass)
-            $http.get("http://wiprocarpool.azurewebsites.net/authenticate/" + email + "/" + pass)
+            //$http.get("http://wiprocarpoolwin.azurewebsites.net/authenticate/" + email + "/" + pass)
+            $http.get("http://wiprocarpoolwin.azurewebsites.net/authenticate/" + email + "/" + pass)
             .success(function (response) {
                 var data = JSON.stringify(response);
                 var result = JSON.parse(data);
@@ -91,7 +91,7 @@ app.controller('userCtrl', function ($scope, $http, $window) {
                 ]
             });
             $scope.processing = true;
-            var res = $http.post('http://wiprocarpool.azurewebsites.net/register', user,
+            var res = $http.post('http://wiprocarpoolwin.azurewebsites.net/register', user,
                       { headers: { 'Content-Type': 'application/json' } });
             res.success(function (data, status, headers, config) {
                 $scope.iserror = true;
@@ -129,7 +129,7 @@ app.controller('userCtrl', function ($scope, $http, $window) {
 
 app.controller('searchCtrl', function ($scope, $http, $window, $rootScope) {
 
-    var url = "http://wiprocarpool.azurewebsites.net/listsharedrides/";
+    var url = "http://wiprocarpoolwin.azurewebsites.net/listsharedrides/";
     var userid = window.localStorage.getItem("userid");
     try {
         $http.get(url + "undefined/undefined/" + userid)
@@ -186,7 +186,7 @@ app.controller('newRideCtrl', function ($scope, $http, $window) {
 
 app.controller('dashboardCtrl', function ($scope, $http, $window) {
     $scope.userName = localStorage.getItem("username");
-    PushNotifications();
+    //PushNotifications();
     navigationLinks($scope, $http, $window);
 });
 
@@ -248,7 +248,8 @@ function navigationLinks($scope, $http, $window) {
 }
 
 function PushNotifications() {
-    var notificationurl = "http://wiprocarpool.azurewebsites.net/";
+    //var notificationurl = "http://wiprocarpoolwin.azurewebsites.net/";
+    var notificationurl = "http://wiprocarpoolwin.azurewebsites.net/";
     var isowner = window.localStorage.getItem("isowner");
     var userId = window.localStorage.getItem("userid");
     var todayDate = new Date();
@@ -265,13 +266,18 @@ function PushNotifications() {
     }
 
     $("#MyNotifications").css("color", "green");
-    NotificationClientService.AutomaticNotifications(notificationurl, 2, totaltimeout, null, NoticationCallback);
+    NotificationClientService.AutomaticNotifications(notificationurl, 5, totaltimeout, null, NoticationCallback);
 }
 
 function NoticationCallback(data) {
     var isowner = window.localStorage.getItem("isowner");
 
-    if (data != undefined && data != null && data.data.length > 0) {
+    if (data  &&
+       // data != null &&
+        //data.data != null && 
+        data.data && 
+        data.data.length > 0) {
+
         if (isowner == "true") {
             $("#MyNotifications").css("color", "red");
             CancelNotification.Clear(NotificationClientService.RefreshIntervalId);
@@ -296,8 +302,8 @@ app.controller('usernotificationCtrl', function ($scope, $http, $window) {
     var userId = window.localStorage.getItem("userid");
     $scope.userName = localStorage.getItem("username");
     $http.defaults.cache = false;
-    //var url = "http://wiprocarpool.azurewebsites.net/receivenotitifications/53946907-3b48-6904-f599-db29de2e74e6";
-    var url = "http://wiprocarpool.azurewebsites.net/receivenotitifications/" + userId;
+    //var url = "http://wiprocarpoolwin.azurewebsites.net/receivenotitifications/53946907-3b48-6904-f599-db29de2e74e6";
+    var url = "http://wiprocarpoolwin.azurewebsites.net/receivenotitifications/" + userId + "?rnd=" + new Date().getTime();
     $http.get(url)
             .success(function (response) {
 
@@ -325,8 +331,8 @@ app.controller('ownernotificationCtrl', function ($scope, $http, $window) {
     var todayDate = new Date();
     var date = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
     //var date = todayDate.getFullYear() + "-" + ("0" + (todayDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (todayDate.getDate())).slice(-2);
-    //var url = "http://wiprocarpool.azurewebsites.net/getnotitifications/bae03711-08e6-7d8f-8101-457caa0368a8/2011-07-14";
-    var url = "http://wiprocarpool.azurewebsites.net/getnotitifications/" + userId + "/" + date.toString();
+    //var url = "http://wiprocarpoolwin.azurewebsites.net/getnotitifications/bae03711-08e6-7d8f-8101-457caa0368a8/2011-07-14";
+    var url = "http://wiprocarpoolwin.azurewebsites.net/getnotitifications/" + userId + "/" + date.toString() + "?rnd=" + new Date().getTime();
     $http.defaults.cache = false;
     $http.get(url)
             .success(function (response) {
@@ -357,7 +363,7 @@ app.controller('ownernotificationCtrl', function ($scope, $http, $window) {
             reqforcurrgeolocn:userreqforcurrgeolocnvalue
         });
 
-        var res = $http.post('http://wiprocarpool.azurewebsites.net/rideconfirmation', user, { headers: { 'Content-Type': 'application/json' } });
+        var res = $http.post('http://wiprocarpoolwin.azurewebsites.net/rideconfirmation', user, { headers: { 'Content-Type': 'application/json' } });
         res.success(function (data, status, headers, config) {
             $scope.notificationdata = "";
             window.location.href = 'ownernotification.html';

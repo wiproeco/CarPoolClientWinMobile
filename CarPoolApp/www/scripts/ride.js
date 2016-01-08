@@ -68,7 +68,7 @@ var carOwnerId = null;
                     name: "searchrides",
                     type: "GET",
                     contentType: "application/json",
-                    url: "http://wiprocarpool.azurewebsites.net/searchrides/" + searchLocation.vicinity,
+                    url: "http://wiprocarpoolwin.azurewebsites.net/searchrides/" + searchLocation.vicinity,
                     dataType: "json"
                 }
 
@@ -89,7 +89,7 @@ var carOwnerId = null;
                 name: "joinride",
                 type: "POST",
                 contentType: "application/json",
-                url: "http://wiprocarpool.azurewebsites.net/joinride/",
+                url: "http://wiprocarpoolwin.azurewebsites.net/joinride/",
                 data: JSON.stringify({ carownerId: carOwnerId, userId: userId, rideid: rideObject.rideid, boardingid: $("#ddlPickuppoints").val(), reqforcurrgeolocn: reqforcurrgeolocnvalue }),
                 dataType: "json"
             }
@@ -133,7 +133,7 @@ var carOwnerId = null;
                 name: "getridedetails",
                 type: "GET",
                 contentType: "application/json",
-                url: "http://wiprocarpool.azurewebsites.net/getridedetails/" + docId,
+                url: "http://wiprocarpoolwin.azurewebsites.net/getridedetails/" + docId,
                 dataType: "json"
             }
 

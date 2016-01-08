@@ -54,7 +54,7 @@ var position;
                 name: "getridedetails",
                 type: "GET",
                 contentType: "application/json",
-                url: "http://wiprocarpool.azurewebsites.net/getridedetails/" + userId + "/" + rideId,
+                url: "http://wiprocarpoolwin.azurewebsites.net/getridedetails/" + userId + "/" + rideId,
                 dataType: "json"
             }
 

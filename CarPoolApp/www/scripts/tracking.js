@@ -56,7 +56,7 @@
                 name: "getuserdetails",
                 type: "GET",
                 contentType: "application/json",
-                url: "http://wiprocarpool.azurewebsites.net/getuserdetails/",
+                url: "http://wiprocarpoolwin.azurewebsites.net/getuserdetails/" + ownerId,
                 dataType: "json"
             }
 

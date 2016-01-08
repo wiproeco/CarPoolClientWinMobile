@@ -6,7 +6,8 @@
         Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
         For details, see http://go.microsoft.com/fwlink/?LinkID=617521
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.gstatic.com 'unsafe-eval' 'self' https://*.googleapis.com 'unsafe-eval'; img-src *; font-src *; media-src *">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; script-src 'self' https://ssl.gstatic.com 'unsafe-eval' 'self' https://*.googleapis.com 'unsafe-eval'; img-src *; font-src *; media-src *">-->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-eval' *; style-src 'unsafe-inline' *; img-src * data:">
     <title>Wipro Car Pool App</title>
 
     <!-- CarPoolApp references -->

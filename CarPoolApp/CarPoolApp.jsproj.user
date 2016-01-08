@@ -3,6 +3,9 @@
   <PropertyGroup>
     <ReferenceCachePath>C:\Users\v-srtedl\AppData\Local\Temp\ez4z3cdk_CarPoolApp_refcache</ReferenceCachePath>
     <ShowAllFiles>false</ShowAllFiles>
+    <AppxPackageIsForStore>False</AppxPackageIsForStore>
+    <AppxShowAllApps>False</AppxShowAllApps>
+    <AppxBuildConfigurationSelection>arm</AppxBuildConfigurationSelection>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
     <DebuggerFlavor>AndroidEmulator</DebuggerFlavor>
@@ -11,5 +14,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Windows Phone (Universal)'">
     <DebuggerFlavor>WindowsMobileEmulator</DebuggerFlavor>
     <WindowsMobileEmulatorID>D363CCA4-0764-4F2C-9EE1-12E55E13C0FC;Emulator 8.1 720P 4.7 inch</WindowsMobileEmulatorID>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Windows Phone 8'">
+    <DebuggerFlavor>PhoneEmulator720P</DebuggerFlavor>
   </PropertyGroup>
 </Project>

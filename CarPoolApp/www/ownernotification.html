@@ -51,24 +51,26 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    <div><img src="images/icon-36-ldpi.png" />&nbsp;Wipro Carpool App!</div>
+                    <div><i class="fa fa-car fa-2x"></i>&nbsp;Wipro Carpool App!</div>
                 </a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
                 <ul class="nav navbar-nav">
                     <li style="background-color:white;line-height:50px;">
-                        <span style="padding-left:15px;"><b>Welcome {{ userName }}!</b></span> <!--<i class="fa fa-pencil fa-fw"></i>-->
+                        <span style="padding-left:15px;"><b>Welcome {{ userName }}!</b></span> <i class="fa fa-gear fa-fw"></i>
                     </li>
                     <li class="divider"></li>
-                    <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Link</a></li>-->
                     <li><a href="#" ng-click="MyDashboard()">Dashboard</a></li>
+                    <li><a href="#" ng-click="MyNotifications()">Notifications</a></li>
                     <li><a id="carownerShow2" href="#" ng-click="MyRides()">My Rides</a></li>
                     <li><a id="passangerShow2" href="#" ng-click="JoinRide()">Join Ride</a></li>
-                    <li><a href="#" ng-click="MyNotifications()">Notifications</a></li>
+                    <li><a href="#">Rides History</a></li>
+                    <li><a href="#">Help</a></li>
                     <li><a href="#" ng-click="logOut()">Log Out</a></li>
                 </ul>
             </div>
@@ -120,15 +122,15 @@
                                             <input type="checkbox" id="chkuserreqforcurrgeolocn" name="chkuserreqforcurrgeolocn" ng-model="data.reqforcurrgeolocn">Requested for current location
                                             <br />
                                         </div>
-                                        <a href="#" alt="Accept" ng-click="updateRideNotification(data.ownerid, data.rideid, data.passengerid,'accepted');"><i class="fa fa-thumbs-up fa-2x"></i></a>
-                                        <a href="#" alt="Reject" ng-click="updateRideNotification(data.ownerid, data.rideid, data.passengerid,'rejected');"><i class="fa fa-thumbs-down fa-2x"></i></a>
+                                        <a href="#" alt="Accept" ng-click="updateRideNotification(data.ownerid, data.rideid, data.passengerid,'accepted');"><i class="fa fa-check fa-2x"></i></a>
+                                        <a href="#" alt="Reject" ng-click="updateRideNotification(data.ownerid, data.rideid, data.passengerid,'rejected');"><i class="fa fa-close fa-2x"></i></a>
                                     </td>
                                     <td>
-                                        <img ng-src="{{data.photo}}" alt="pic" height="80" width="80" />
+                                        <img ng-src="{{data.photo}}"  height="50" width="50" />
                                     </td>
                                     <td>
                                         <div>
-                                            <a ng-href="tel: {{data.mobile}}" target="_blank">
+                                            <a ng-href="tel: {{data.mobile}}" target="_blank" >
                                                 <img border="0" alt="MakeCall" src="images/makecall.png" width="25" height="25">
                                                 {{data.passengername}}
                                             </a>
@@ -146,15 +148,13 @@
             </div>
         </div>
         <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    Powered By - Wipro Technologies Ltd.
-                </div>
-            </div>
-        </footer>
     </div>
-
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted"> Powered By - Wipro Technologies Ltd.</p>
+        </div>
+    </footer>
+    
     <!-- Cordova reference, this is added to your app when it's built. -->
     <script src="cordova.js"></script>
     <script src="scripts/platformOverrides.js"></script>
@@ -171,5 +171,6 @@
     <!-- <script src="js/jquery.js"></script>-->
     <!-- Custom Theme JavaScript -->
     <script src="scripts/custom.js"></script>
+    <script src="scripts/Error.js"></script>
 </body>
 </html>

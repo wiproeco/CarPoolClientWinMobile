@@ -15,9 +15,9 @@
     <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">-->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/index.css"> 
     <!--<link rel="stylesheet" href="css/form-elements.css">-->
     <!--<link rel="stylesheet" href="css/style.css">-->
-    <!--<link rel="stylesheet" href="css/index.css">-->
     <!--<script src="cordova.js"></script>-->
     <style>
         #wrapper {
@@ -56,6 +56,12 @@
 
     <div class="container-fluid">              
         <div class="row">
+            <!--<div id="errordiv" class="row">
+                <div class="col-lg-12">
+                    <div id="errormsg" class="alert alert-danger">
+                    </div>
+                </div>
+            </div>-->
             <div class="wrapper">
                 <div id="map" data-tap-disabled="true"></div>
                 <div id="over_map" >
@@ -126,6 +132,11 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted"> Powered By - Wipro Technologies Ltd.</p>
+        </div>
+    </footer>
     <!-- Cordova reference, this is added to your app when it's built. -->
     <script src="scripts/platformOverrides.js"></script>
     <script src="scripts/jquery-1.11.1.min.js"></script>
@@ -138,5 +149,6 @@
     <script src="scripts/ride.js"></script>
     <script src="scripts/custom.js"></script>
     <script src="scripts/NotificationClientService.js"></script>
+    <script src="scripts/Error.js"></script>
 </body>
 </html>

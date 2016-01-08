@@ -104,7 +104,7 @@
     <preference name="android-maxSdkVersion" value="19" />
     <vs:plugin name="cordova-plugin-device" version="1.1.0" />
     <vs:platformSpecificValues>
-        <vs:platformSpecificWidget platformName="windows" version="1.0.0.3">
+        <vs:platformSpecificWidget platformName="windows" version="1.0.0.4">
         </vs:platformSpecificWidget>
     </vs:platformSpecificValues>
 </widget>

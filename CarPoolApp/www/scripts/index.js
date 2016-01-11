@@ -14,7 +14,7 @@
         document.addEventListener( 'pause', onPause.bind( this ), false );
         document.addEventListener( 'resume', onResume.bind( this ), false );        
         // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
-        
+        loadCamera();
 
         var deviceOS = device.platform;  //fetch the device operating system
         var deviceOSVersion = device.version;  //fetch the device OS version
@@ -33,6 +33,41 @@
         // TODO: This application has been reactivated. Restore application state here.
         loadMapsApi();
     };
+
+    function loadCamera()
+    {
+        document.getElementById('btnTakenPhoto').onclick = function () {
+
+            navigator.camera.getPicture(function (imageUri) {
+                //var displayImage = document.getElementById('blah');
+                //displayImage.height = "150";
+                //displayImage.width = "100";
+                //displayImage.src = imageUri;
+                var dataURL = encodeImageUri(imageUri);
+                document.getElementById('selfieImage').style.border= "0";
+                document.getElementById('selfieImage').innerHTML = "<img id='blah' style='height:120px;width:90px;border: 2px dotted #808080' src='" + imageUri + "' />";
+                window.localStorage.setItem("binaryImage", dataURL);
+            }, null, null);
+
+            
+        };
+    }
+
+    function encodeImageUri(imageUri) {
+        var c = document.createElement('canvas');
+        var ctx = c.getContext("2d");
+        var img = new Image();
+        img.onload = function () {
+            c.width = this.width;
+            c.height = this.height;
+            ctx.drawImage(img, 0, 0);
+        };
+        img.src = imageUri;
+        var dataURL = c.toDataURL("image/jpeg");
+        return dataURL;
+    }
+
+
 
     function loadMapsApi() {
         //if (navigator.connection.type === Connection.NONE || (global.google !== undefined && global.google.maps)) {
